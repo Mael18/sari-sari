@@ -6,13 +6,15 @@
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#ec4899"> <title>Schuyler Sari Sari Store</title>
+    <meta name="theme-color" content="#ec4899"> 
+    
+    <title>Schuyler Sari Sari Store</title>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
         :root {
-            --primary: #ec4899; /* Pink-500 */
-            --primary-dark: #db2777; /* Pink-600 */
-            --bg: #fdf2f8; /* Very light pink background */
+            --primary: #ec4899; 
+            --primary-dark: #db2777; 
+            --bg: #fdf2f8; 
             --surface: #ffffff;
             --text: #1f2937;
             --border: #fbcfe8;
@@ -28,13 +30,9 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 15px;
-            padding-bottom: 80px; /* Space for scrolling */
+            padding-bottom: 80px; 
         }
-        h2 {
-            text-align: center;
-            color: var(--primary-dark);
-            margin-top: 5px;
-        }
+        h2 { text-align: center; color: var(--primary-dark); margin-top: 5px; }
         
         /* Scanner Area */
         #reader-container {
@@ -43,136 +41,84 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-bottom: 15px;
+            position: relative;
         }
         #reader { width: 100%; }
         #scan-status {
-            text-align: center;
-            font-weight: bold;
-            color: #16a34a;
-            height: 20px;
+            text-align: center; font-weight: bold; color: #16a34a; height: 20px; margin-top: 5px;
+        }
+        #torchBtn {
+            background-color: #374151;
             margin-top: 10px;
         }
 
         /* Tabs */
         .tabs {
-            display: flex;
-            margin-bottom: 20px;
-            background: var(--surface);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex; margin-bottom: 20px; background: var(--surface);
+            border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            background: #fce7f3;
-            color: var(--primary-dark);
+            flex: 1; text-align: center; padding: 12px 5px; cursor: pointer;
+            font-weight: bold; font-size: 14px; background: #fce7f3; color: var(--primary-dark);
         }
-        .tab.active {
-            background: var(--primary);
-            color: white;
-        }
+        .tab.active { background: var(--primary); color: white; }
 
         /* Sections */
         .section {
-            display: none;
-            background: var(--surface);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: none; background: var(--surface); padding: 20px;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .section.active { display: block; }
         
         input, button {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 16px;
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            border: 1px solid var(--border); border-radius: 6px;
+            box-sizing: border-box; font-size: 16px;
         }
         button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
+            background-color: var(--primary); color: white; border: none;
+            cursor: pointer; font-weight: bold;
         }
         button:hover { background-color: var(--primary-dark); }
+        .btn-danger { background-color: #ef4444; }
+        .btn-danger:hover { background-color: #dc2626; }
+        .btn-small { width: auto; padding: 6px 10px; font-size: 12px; margin: 0; }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        /* Custom Inputs for Cart */
-        .qty-input {
-            width: 60px;
-            padding: 5px;
-            margin: 0;
-            text-align: center;
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); }
+        .qty-input { width: 60px; padding: 5px; margin: 0; text-align: center; }
 
-        /* Sales Dashboard Cards */
-        .dashboard {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        /* Dashboard & Total Box */
+        .dashboard { display: flex; gap: 10px; margin-bottom: 20px; }
         .card {
-            flex: 1;
-            background: #fce7f3;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border);
+            flex: 1; background: #fce7f3; padding: 15px; border-radius: 8px;
+            text-align: center; border: 1px solid var(--border);
         }
         .card h4 { margin: 0 0 5px 0; color: var(--text); font-size: 12px; }
         .card h2 { margin: 0; color: var(--primary-dark); }
-
         .total-box {
-            background: #fce7f3;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            border: 1px solid var(--border);
+            background: #fce7f3; padding: 15px; border-radius: 6px;
+            margin-top: 15px; border: 1px solid var(--border);
         }
         .total-box h3 { margin: 0 0 10px 0; }
 
         /* Receipt Modal */
         #receiptModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;
         }
         .receipt-content {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            font-family: monospace;
+            background: white; width: 90%; max-width: 400px; padding: 20px;
+            border-radius: 8px; text-align: center; font-family: monospace;
         }
         .receipt-content h3 { margin-top: 0; }
         .receipt-table { width: 100%; margin-bottom: 15px; }
         .receipt-table td { border: none; padding: 3px 0; }
+        
+        /* Backup Section */
+        .backup-section {
+            margin-top: 30px; padding-top: 20px; border-top: 2px dashed var(--border);
+        }
     </style>
 </head>
 <body>
@@ -182,25 +128,20 @@
     
     <div id="reader-container">
         <div id="reader"></div>
+        <button id="torchBtn" onclick="toggleFlashlight()">🔦 Turn Flashlight On/Off</button>
         <div id="scan-status"></div>
     </div>
     
     <div class="tabs">
         <div class="tab active" onclick="switchTab('pos')">Scanner & Cart</div>
         <div class="tab" onclick="switchTab('inventory')">Add Items</div>
-        <div class="tab" onclick="switchTab('sales')">Sales & History</div>
+        <div class="tab" onclick="switchTab('sales')">Sales & Data</div>
     </div>
 
     <div id="pos" class="section active">
         <h3>Current Cart</h3>
         <table>
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Item</th><th>Qty</th><th>Subtotal</th></tr></thead>
             <tbody id="cartTable"></tbody>
         </table>
 
@@ -210,55 +151,45 @@
             <input type="number" id="cashGiven" placeholder="Enter amount..." oninput="calculateChange()">
             <h3 style="color: #16a34a;">Change: ₱<span id="changeAmount">0.00</span></h3>
             <button onclick="completeSale()" style="margin-top: 10px;">Complete Sale & Save</button>
-            <button onclick="clearCart()" style="background-color: #ef4444; margin-top: 5px;">Cancel Sale</button>
+            <button onclick="clearCart()" class="btn-danger" style="margin-top: 5px;">Cancel Sale</button>
         </div>
     </div>
 
     <div id="inventory" class="section">
-        <h3>Add New Product</h3>
-        <p style="font-size: 14px; color: #64748b;">Scan a product above, or type the barcode manually.</p>
-        <input type="text" id="newBarcode" placeholder="Barcode Number will appear here">
+        <h3>Add / Edit Product</h3>
+        <p style="font-size: 14px; color: #64748b;">Scan a product to add it, or scan an existing one to edit.</p>
+        <input type="text" id="newBarcode" placeholder="Barcode Number">
         <input type="text" id="newName" placeholder="Item Name (e.g., Magic Sarap)">
         <input type="number" id="newPrice" placeholder="Price (₱)">
-        <button onclick="saveItem()">Save to Inventory</button>
+        <button onclick="saveItem()">Save Item</button>
 
         <h3>Saved Items</h3>
         <table>
-            <thead>
-                <tr>
-                    <th>Barcode</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Name</th><th>Price</th><th>Action</th></tr></thead>
             <tbody id="inventoryTable"></tbody>
         </table>
     </div>
 
     <div id="sales" class="section">
         <div class="dashboard">
-            <div class="card">
-                <h4>THIS WEEK</h4>
-                <h2 id="weeklySales">₱0.00</h2>
-            </div>
-            <div class="card">
-                <h4>THIS MONTH</h4>
-                <h2 id="monthlySales">₱0.00</h2>
-            </div>
+            <div class="card"><h4>THIS WEEK</h4><h2 id="weeklySales">₱0.00</h2></div>
+            <div class="card"><h4>THIS MONTH</h4><h2 id="monthlySales">₱0.00</h2></div>
         </div>
 
         <h3>Transaction History</h3>
-        <p style="font-size: 12px; color: #64748b;">Tap a transaction to view the receipt.</p>
         <table>
-            <thead>
-                <tr>
-                    <th>Date & Time</th>
-                    <th>Items</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Date</th><th>Items</th><th>Total</th></tr></thead>
             <tbody id="historyTable"></tbody>
         </table>
+
+        <div class="backup-section">
+            <h3 style="color: var(--primary-dark);">Backup & Restore Data</h3>
+            <p style="font-size: 12px;">Save your data to transfer to another phone.</p>
+            <button onclick="exportData()" style="background-color: #10b981;">💾 Download Backup File</button>
+            
+            <label style="display: block; margin-top: 15px; font-weight: bold; font-size: 14px;">Restore from Backup:</label>
+            <input type="file" id="importFile" accept=".json" onchange="importData(event)" style="padding: 5px;">
+        </div>
     </div>
 </div>
 
@@ -275,6 +206,7 @@
             Change: ₱<span id="receiptChange"></span>
         </div>
         <button onclick="closeReceipt()" style="margin-top: 20px;">Close Receipt</button>
+        <button id="deleteTxBtn" class="btn-danger" style="margin-top: 10px;">Delete Transaction</button>
     </div>
 </div>
 
@@ -286,30 +218,39 @@
     let currentTotal = 0;
     let currentMode = 'pos';
     let lastScanned = "";
+    let torchEnabled = false;
 
     // ----- AUDIO BEEP FUNCTION -----
     function playBeep() {
         try {
-            // Use browser's built-in audio engine
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             const ctx = new AudioContext();
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            
-            osc.type = 'sine'; // Smooth tone
-            osc.frequency.setValueAtTime(1200, ctx.currentTime); // High pitch like a scanner
-            
-            // Volume control (fades out quickly so it doesn't click)
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(1200, ctx.currentTime);
             gain.gain.setValueAtTime(0.5, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+            osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.1);
+        } catch (e) { }
+    }
+
+    // ----- CAMERA FLASHLIGHT -----
+    async function toggleFlashlight() {
+        try {
+            const video = document.querySelector('#reader video');
+            if (!video || !video.srcObject) return alert("Camera is not active yet.");
+            const track = video.srcObject.getVideoTracks()[0];
+            const capabilities = track.getCapabilities();
             
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 0.1); // Lasts for 0.1 seconds
-        } catch (e) {
-            console.log("Audio not supported or blocked by browser");
+            if (!capabilities.torch) {
+                return alert("Flashlight control is not supported on this phone's browser.");
+            }
+            
+            torchEnabled = !torchEnabled;
+            await track.applyConstraints({ advanced: [{ torch: torchEnabled }] });
+        } catch (err) {
+            alert("Could not turn on flashlight.");
         }
     }
 
@@ -321,7 +262,6 @@
         event.target.classList.add('active');
         document.getElementById(tabId).classList.add('active');
         
-        // Hide scanner if viewing sales to save space
         if(tabId === 'sales') {
             document.getElementById('reader-container').style.display = 'none';
             renderSales();
@@ -331,13 +271,20 @@
         document.getElementById('scan-status').innerText = "";
     }
 
-    // ----- INVENTORY MANAGEMENT -----
+    // ----- INVENTORY MANAGEMENT (EDIT & DELETE) -----
     function saveItem() {
         const barcode = document.getElementById('newBarcode').value.trim();
         const name = document.getElementById('newName').value.trim();
         const price = parseFloat(document.getElementById('newPrice').value);
 
-        if (!barcode || !name || isNaN(price)) return alert("Please fill in all fields correctly.");
+        if (!barcode || !name || isNaN(price)) return alert("Please fill in all fields.");
+
+        // Check for duplicate/edit
+        if (inventory[barcode]) {
+            if (!confirm(`This barcode is already saved as "${inventory[barcode].name}".\n\nDo you want to update it to "${name}" for ₱${price}?`)) {
+                return; // User cancelled
+            }
+        }
 
         inventory[barcode] = { name, price };
         localStorage.setItem('sariSariInventory', JSON.stringify(inventory));
@@ -350,41 +297,45 @@
         renderInventory();
     }
 
+    function deleteInventoryItem(barcode) {
+        if(confirm(`Are you sure you want to permanently delete "${inventory[barcode].name}" from your store?`)) {
+            delete inventory[barcode];
+            localStorage.setItem('sariSariInventory', JSON.stringify(inventory));
+            renderInventory();
+        }
+    }
+
     function renderInventory() {
         const tbody = document.getElementById('inventoryTable');
         tbody.innerHTML = '';
         for (const [barcode, details] of Object.entries(inventory)) {
-            tbody.innerHTML += `<tr><td>${barcode}</td><td>${details.name}</td><td>₱${details.price.toFixed(2)}</td></tr>`;
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${details.name}</strong><br><small style="color:gray">${barcode}</small></td>
+                    <td>₱${details.price.toFixed(2)}</td>
+                    <td><button onclick="deleteInventoryItem('${barcode}')" class="btn-danger btn-small">Delete</button></td>
+                </tr>`;
         }
     }
 
     // ----- CART & CHECKOUT -----
     function addToCart(barcode) {
-        if (!inventory[barcode]) return alert("Barcode " + barcode + " not found!");
-
-        if (cart[barcode]) {
-            cart[barcode].qty += 1;
-        } else {
-            cart[barcode] = { ...inventory[barcode], qty: 1 };
-        }
+        if (!inventory[barcode]) return alert("Barcode not found! Go to 'Add Items' to save it.");
+        if (cart[barcode]) cart[barcode].qty += 1;
+        else cart[barcode] = { ...inventory[barcode], qty: 1 };
         updateCartDisplay();
     }
 
     function updateQuantity(barcode, newQty) {
         let qty = parseInt(newQty);
-        if (qty <= 0 || isNaN(qty)) {
-            delete cart[barcode]; // Remove item if qty is 0
-        } else {
-            cart[barcode].qty = qty;
-        }
+        if (qty <= 0 || isNaN(qty)) delete cart[barcode]; 
+        else cart[barcode].qty = qty;
         updateCartDisplay();
     }
 
     function updateCartDisplay() {
         const tbody = document.getElementById('cartTable');
-        tbody.innerHTML = '';
-        currentTotal = 0;
-
+        tbody.innerHTML = ''; currentTotal = 0;
         for (const [barcode, item] of Object.entries(cart)) {
             const subtotal = item.price * item.qty;
             currentTotal += subtotal;
@@ -410,74 +361,47 @@
         const cash = parseFloat(document.getElementById('cashGiven').value) || 0;
         if (cash < currentTotal) return alert("Not enough cash received!");
 
-        // Create transaction record
         const transaction = {
-            id: Date.now(),
-            date: new Date().toISOString(),
-            items: Object.values(cart),
-            total: currentTotal,
-            cash: cash,
-            change: cash - currentTotal
+            id: Date.now(), date: new Date().toISOString(),
+            items: Object.values(cart), total: currentTotal, cash: cash, change: cash - currentTotal
         };
 
-        // Save to history
-        salesHistory.unshift(transaction); // Add to beginning of array
+        salesHistory.unshift(transaction); 
         localStorage.setItem('sariSariSales', JSON.stringify(salesHistory));
-
-        alert("Sale Successful!");
-        clearCart();
+        alert("Sale Successful!"); clearCart();
     }
 
     function clearCart() {
-        cart = {};
-        document.getElementById('cashGiven').value = '';
-        updateCartDisplay();
+        cart = {}; document.getElementById('cashGiven').value = ''; updateCartDisplay();
     }
 
-    // ----- SALES & HISTORY DASHBOARD -----
+    // ----- SALES & HISTORY DASHBOARD (AND DELETION) -----
     function renderSales() {
-        let weeklyTotal = 0;
-        let monthlyTotal = 0;
+        let weeklyTotal = 0; let monthlyTotal = 0;
         const now = new Date();
         const tbody = document.getElementById('historyTable');
         tbody.innerHTML = '';
 
         salesHistory.forEach((tx, index) => {
             const txDate = new Date(tx.date);
-            
-            // Calculate Monthly Sales
-            if (txDate.getMonth() === now.getMonth() && txDate.getFullYear() === now.getFullYear()) {
-                monthlyTotal += tx.total;
-            }
-            
-            // Calculate Weekly Sales (Past 7 Days)
-            const daysDifference = (now - txDate) / (1000 * 60 * 60 * 24);
-            if (daysDifference <= 7) {
-                weeklyTotal += tx.total;
-            }
+            if (txDate.getMonth() === now.getMonth() && txDate.getFullYear() === now.getFullYear()) monthlyTotal += tx.total;
+            if ((now - txDate) / (1000 * 60 * 60 * 24) <= 7) weeklyTotal += tx.total;
 
-            // Calculate total items in this transaction
             const totalItems = tx.items.reduce((sum, item) => sum + item.qty, 0);
-
-            // Add to table
             tbody.innerHTML += `
                 <tr style="cursor: pointer; background: white;" onclick="openReceipt(${index})">
-                    <td>${txDate.toLocaleDateString()} <br><small>${txDate.toLocaleTimeString()}</small></td>
+                    <td>${txDate.toLocaleDateString()}<br><small>${txDate.toLocaleTimeString()}</small></td>
                     <td>${totalItems} items</td>
                     <td style="color: var(--primary-dark); font-weight: bold;">₱${tx.total.toFixed(2)}</td>
                 </tr>`;
         });
-
         document.getElementById('weeklySales').innerText = "₱" + weeklyTotal.toFixed(2);
         document.getElementById('monthlySales').innerText = "₱" + monthlyTotal.toFixed(2);
     }
 
-    // ----- RECEIPT MODAL -----
     function openReceipt(index) {
         const tx = salesHistory[index];
-        const dateObj = new Date(tx.date);
-        
-        document.getElementById('receiptDate').innerText = dateObj.toLocaleString();
+        document.getElementById('receiptDate').innerText = new Date(tx.date).toLocaleString();
         document.getElementById('receiptTotal').innerText = tx.total.toFixed(2);
         document.getElementById('receiptCash').innerText = tx.cash.toFixed(2);
         document.getElementById('receiptChange').innerText = tx.change.toFixed(2);
@@ -485,33 +409,74 @@
         const tbody = document.getElementById('receiptItems');
         tbody.innerHTML = '';
         tx.items.forEach(item => {
-            tbody.innerHTML += `
-                <tr>
-                    <td style="text-align: left;">${item.qty}x ${item.name}</td>
-                    <td style="text-align: right;">₱${(item.price * item.qty).toFixed(2)}</td>
-                </tr>`;
+            tbody.innerHTML += `<tr><td style="text-align: left;">${item.qty}x ${item.name}</td><td style="text-align: right;">₱${(item.price * item.qty).toFixed(2)}</td></tr>`;
         });
+
+        // Set up the delete button for this specific transaction
+        document.getElementById('deleteTxBtn').onclick = function() {
+            if(confirm("Are you sure you want to permanently delete this transaction from your sales history?")) {
+                salesHistory.splice(index, 1); // Remove 1 item at this index
+                localStorage.setItem('sariSariSales', JSON.stringify(salesHistory));
+                closeReceipt();
+                renderSales(); // Refresh dashboard
+            }
+        };
 
         document.getElementById('receiptModal').style.display = 'flex';
     }
 
-    function closeReceipt() {
-        document.getElementById('receiptModal').style.display = 'none';
+    function closeReceipt() { document.getElementById('receiptModal').style.display = 'none'; }
+
+    // ----- BACKUP AND RESTORE -----
+    function exportData() {
+        const data = { inventory: inventory, sales: salesHistory };
+        const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "SchuylerStore_Backup_" + new Date().toISOString().slice(0,10) + ".json";
+        a.click();
+    }
+
+    function importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                if(data.inventory && data.sales) {
+                    if(!confirm("Warning: This will overwrite your current inventory and sales data. Do you want to proceed?")) return;
+                    
+                    inventory = data.inventory;
+                    salesHistory = data.sales;
+                    localStorage.setItem('sariSariInventory', JSON.stringify(inventory));
+                    localStorage.setItem('sariSariSales', JSON.stringify(salesHistory));
+                    
+                    alert("Data restored successfully!");
+                    renderInventory();
+                    renderSales();
+                    document.getElementById('importFile').value = ""; // reset file input
+                } else {
+                    alert("Invalid backup file structure.");
+                }
+            } catch (err) {
+                alert("Error reading file. Make sure it is a valid .json backup.");
+            }
+        };
+        reader.readAsText(file);
     }
 
     // ----- BARCODE SCANNER SETUP -----
     function showScanStatus(message) {
         const statusDiv = document.getElementById('scan-status');
-        statusDiv.innerText = message;
-        setTimeout(() => { statusDiv.innerText = ""; }, 2000);
+        statusDiv.innerText = message; setTimeout(() => { statusDiv.innerText = ""; }, 2000);
     }
 
     function onScanSuccess(decodedText) {
         if (decodedText === lastScanned) return;
-        lastScanned = decodedText;
-        setTimeout(() => { lastScanned = ""; }, 1500); 
+        lastScanned = decodedText; setTimeout(() => { lastScanned = ""; }, 1500); 
 
-        // Play the beep sound!
         playBeep();
 
         if (currentMode === 'pos') {
@@ -519,13 +484,23 @@
             showScanStatus("Added to cart!");
         } else if (currentMode === 'inventory') {
             document.getElementById('newBarcode').value = decodedText;
-            showScanStatus("Barcode copied!");
-            document.getElementById('newName').focus(); 
+            
+            // Duplicate Check / Smart Edit Load
+            if (inventory[decodedText]) {
+                alert(`NOTICE: Item already exists!\n\nName: ${inventory[decodedText].name}\nPrice: ₱${inventory[decodedText].price}\n\nThe details have been loaded. You can change the price and click 'Save Item' to update it.`);
+                document.getElementById('newName').value = inventory[decodedText].name;
+                document.getElementById('newPrice').value = inventory[decodedText].price;
+                document.getElementById('newPrice').focus(); // Jump straight to price
+            } else {
+                showScanStatus("Barcode ready!");
+                document.getElementById('newName').focus(); 
+            }
         }
     }
 
+    // Initialize scanner with "rememberLastUsedCamera: true" so it auto-starts on reload
     let html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader", { fps: 10, qrbox: {width: 250, height: 250} }, false);
+        "reader", { fps: 10, qrbox: {width: 250, height: 250}, rememberLastUsedCamera: true }, false);
     html5QrcodeScanner.render(onScanSuccess);
 
     renderInventory();
